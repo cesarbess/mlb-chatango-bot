@@ -1,0 +1,42 @@
+from __future__ import print_function
+import time
+import sys, os
+import mlbgame
+import helper
+
+year = helper.convert_str(time.strftime("%Y"))
+month = helper.convert_str(time.strftime("%m"))
+day = helper.convert_str(time.strftime("%d"))
+hour = helper.convert_str(time.strftime("%H"))
+
+#rewing the day if it's not past 11 a.m (need to check if month is turning)
+if hour < 11:
+    day -= 1
+
+teams_dictionary = {'cubs': "Cubs", 'yankees': "Yankees", 'redsox': "Red Sox",
+                    'mets': "Mets", 'indians': "Indians", 'giants': "Giants",
+                    'angels': "Angels", 'dodgers': "Dodgers", 'pirates': "Pirates",
+                    'astros': "Astros", 'jays': "Blue Jays", 'cards': "Cardinals",
+                    'as': "Athletics", 'athletics': "Athletics", 'os': "Orioles",
+                    'orioles': "Orioles", 'rangers': 'Rangers', 'twins': "Twins",
+                    'rockies': "Rockies", 'phillies': "Phillies", 'tigers': "Tigers",
+                    'rays': "Rays", 'braves': "Braves", 'dbacks': "Diamondbacks",
+                    'diamondbacks': "Diamondbacks", 'royals': "Royals", 'brewers': "Brewers",
+                    'whitesox': "White Sox", 'reds': "Reds", 'marlins': "Marlins",
+                    'padres': "Padres", 'nats': "Nationals", 'mariners': "Mariners"}
+
+def get_all_game_scores():
+    games = mlbgame.day(year, month, day)
+    games_list = []
+    for game in games:
+        games_list.append(str(game))
+
+    return (" ".join(games_list))
+
+def get_team_score( name ):
+    team = teams_dictionary[name]
+    game = mlbgame.day(year, month, day, home=team, away=team)
+    if game:
+        return(str(game[0]))
+    else:
+        return("Sorry, looks like there's no " + name + " game today")
