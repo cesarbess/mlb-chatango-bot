@@ -16,8 +16,9 @@ def is_team_at_home( team_name ):
 #!score team_name command return
 def get_team_score( team_name ):
     game = mlb_data.get_todays_game(team_name)
+    print(game)
     if game:
-        return(str(game[0]))
+        return(str(game))
     else:
         return("Sorry, looks like there's no " + team_name + " game today")
 
@@ -59,11 +60,11 @@ def get_team_record( team_name ):
     if is_team_at_home(team_name):
         home_win = overview.get('home_win')
         home_loss = overview.get('home_loss')
-        return team_name + " are "+ home_win + "-" + home_loss
+        return mlb_data.teams_dictionary[team_name] + " are "+ home_win + "-" + home_loss
     else:
         away_win = overview.get('away_win')
         away_loss = overview.get('away_loss')
-        return team_name + " are "+ away_win + "-" + away_loss
+        return mlb_data.teams_dictionary[team_name] + " are "+ away_win + "-" + away_loss
 
 def get_pitching_line( team_name ):
     game_stats = mlb_data.get_player_stats(team_name)

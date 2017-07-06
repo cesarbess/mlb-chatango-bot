@@ -1,12 +1,14 @@
 import ch
+import mlb
+import mlb_data
+import mlbgame
 
-bot_account = "mlbrobot"
+bot_account = "botthrowaway"
 bot_password = "123456789"
 
 class bot(ch.RoomManager):
 
     def onMessage(self, room, user, message):
-        print("[{0}] {1}: {2}".format(room.name, user.name.title(), message.body))
         try:
             cmd, args = message.body.split(" ", 1)
         except:
@@ -16,11 +18,21 @@ class bot(ch.RoomManager):
             cmd = cmd[1:]
         else:
             prfx = False
-        print(cmd)
-        print(args)
         if prfx:
-            if cmd.lower() == "hi":
-                room.message("hi @"+user.name)
+            if cmd.lower() == "score" and args != "":
+                room.message(mlb.get_team_score(args))
+            elif cmd.lower() == "pitching" and args != "":
+                room.message(mlb.get_current_pitcher(args))
+            elif cmd.lower() == "pitching" and args != "":
+                room.message(mlb.get_current_pitcher(args))
+            elif cmd.lower() == "batting" and args != "":
+                room.message(mlb.get_current_batter(args))
+            elif cmd.lower() == "line" and args != "":
+                room.message(mlb.get_pitching_line(args))
+            elif cmd.lower() == "record" and args != "":
+                room.message(mlb.get_team_record(args))
+            elif cmd.lower() == "time" and args != "":
+                room.message(mlb.get_game_time(args))
 
 rooms = ["testingbotfam"]
 username = bot_account
