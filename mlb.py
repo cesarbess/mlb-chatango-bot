@@ -29,3 +29,19 @@ def get_current_pitcher( team_name ):
             player_id = current_pitcher.attrib['id']
             current_pitcher = current_pitcher.attrib['first_name'] + " " + current_pitcher.attrib['last_name'] + " is pitching. His record is " + current_pitcher.attrib['wins'] + "-" + current_pitcher.attrib['losses'] + "  with a " + current_pitcher.attrib['era'] + " ERA " + 'http://gdx.mlb.com/images/gameday/mugshots/mlb/'+player_id+'@4x.jpg'
             return current_pitcher
+
+def get_current_batter( team_name ):
+    #check other possible statuses
+    game_status = mlb_data.get_game_status(team_name)
+    if game_status == "PRE_GAME":
+        return "Game hasn't start yet fucktard"
+
+    xml = mlb_data.get_game_data_overview(team_name)
+    tree = ET.parse(xml)
+    root = tree.getroot()
+
+    for data in root:
+        for current_batter in data.iter('current_batter'):
+            player_id = current_batter.attrib['id']
+            current_batter = current_batter.attrib['first_name'] + " " + current_batter.attrib['last_name'] + " is batting. His avg is " + current_batter.attrib['avg'] + ' http://gdx.mlb.com/images/gameday/mugshots/mlb/'+player_id+'@4x.jpg'
+            return current_batter
