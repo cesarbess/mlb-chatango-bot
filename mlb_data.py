@@ -52,3 +52,8 @@ def get_game_overview_dict( team_name ):
 def get_game_status( team_name ):
     game = get_todays_game(team_name)
     return game.game_status
+
+def get_player_stats( team_name ):
+    game = get_todays_game(team_name)
+    player_stats = mlbgame.stats.player_stats(game.game_id)
+    return player_stats

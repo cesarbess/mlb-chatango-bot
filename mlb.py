@@ -64,3 +64,35 @@ def get_team_record( team_name ):
         away_win = overview.get('away_win')
         away_loss = overview.get('away_loss')
         return team_name + " are "+ away_win + "-" + away_loss
+
+def get_pitching_line( team_name ):
+    game_stats = mlb_data.get_player_stats(team_name)
+    if is_team_at_home(team_name):
+        pitcher_stats = game_stats['home_pitching'][0]
+    else:
+        pitcher_stats = game_stats['away_pitching'][0]
+
+    pitcher_outs = int(pitcher_stats['out'])
+    pitcher_er = pitcher_stats['er']
+    pitcher_r = pitcher_stats['r']
+    pitcher_hits = pitcher_stats['h']
+    pitcher_so = pitcher_stats['so']
+    pitcher_walks = pitcher_stats['bb']
+    pitcher_np = pitcher_stats['np']
+    pitcher_strikes = pitcher_stats['s']
+    pitcher_wins = pitcher_stats['w']
+    pitcher_losses = pitcher_stats['l']
+    pitcher_era = pitcher_stats['era']
+    pitcher_id = pitcher_stats['id']
+
+    if pitcher_outs % 3 == 1:
+        innings_pitched = str(int((pitcher_outs -1) / 3))
+        IP = innings_pitched + ".1"
+    elif pitcher_outs % 3 == 2:
+        innings_pitched = str(int((pitcher_outs -2) / 3))
+        IP = innings_pitched + ".2"
+    else:
+        IP = str(pitcher_outs/3) + ""
+
+    message = "http://gdx.mlb.com/images/gameday/mugshots/mlb/"+pitcher_id+"@4x.jpg " + pitcher_stats['name'] + " pitching line: " + IP + "IP " + pitcher_er + "ER " + pitcher_hits +"H " + pitcher_so + "SO " + pitcher_walks + "BB " + pitcher_strikes + "-" + pitcher_np + " strikes/pitches "
+    return message
