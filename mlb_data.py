@@ -14,9 +14,9 @@ if hour < 11:
 teams_dictionary = {'cubs': "Cubs", 'yankees': "Yankees", 'redsox': "Red Sox",
                     'mets': "Mets", 'indians': "Indians", 'giants': "Giants",
                     'angels': "Angels", 'dodgers': "Dodgers", 'pirates': "Pirates",
-                    'astros': "Astros", 'jays': "Blue Jays", 'cards': "Cardinals",
-                    'as': "Athletics", 'athletics': "Athletics", 'os': "Orioles",
-                    'orioles': "Orioles", 'rangers': 'Rangers', 'twins': "Twins",
+                    'astros': "Astros", 'jays': "Blue Jays", 'bluejays': "Blue Jays",
+                    'cards': "Cardinals", 'as': "Athletics", 'athletics': "Athletics",
+                    'os': "Orioles", 'orioles': "Orioles", 'rangers': 'Rangers', 'twins': "Twins",
                     'rockies': "Rockies", 'phillies': "Phillies", 'tigers': "Tigers",
                     'rays': "Rays", 'braves': "Braves", 'dbacks': "Diamondbacks",
                     'diamondbacks': "Diamondbacks", 'royals': "Royals", 'brewers': "Brewers",
@@ -39,9 +39,14 @@ def get_todays_game( team_name ):
     else:
         return None
 
-def get_game_data_overview( team_name ):
+def get_game_overview_xml( team_name ):
     game = get_todays_game(team_name)
     overview = mlbgame.data.get_overview(game.game_id)
+    return overview
+
+def get_game_overview_dict( team_name ):
+    game = get_todays_game(team_name)
+    overview = mlbgame.game.overview(game.game_id)
     return overview
 
 def get_game_status( team_name ):
