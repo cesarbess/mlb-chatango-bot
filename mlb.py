@@ -96,3 +96,14 @@ def get_pitching_line( team_name ):
 
     message = "http://gdx.mlb.com/images/gameday/mugshots/mlb/"+pitcher_id+"@4x.jpg " + pitcher_stats['name'] + " pitching line: " + IP + "IP " + pitcher_er + "ER " + pitcher_hits +"H " + pitcher_so + "SO " + pitcher_walks + "BB " + pitcher_strikes + "-" + pitcher_np + " strikes/pitches "
     return message
+
+def get_game_time( team_name ):
+    game_status = mlb_data.get_game_status(team_name)
+    if game_status == "IN_PROGRESS":
+        return "Game is in progress. Hurry up, you can still catch it"
+    overview_dict = mlb_data.get_game_overview_dict(team_name)
+    start_time = overview_dict['time']
+    time_zone = overview_dict['time_zone']
+    am_pm = overview_dict['ampm']
+    message = "Today's " + mlb_data.teams_dictionary[team_name] + " game will start at " + start_time + am_pm + " " + time_zone
+    return message
