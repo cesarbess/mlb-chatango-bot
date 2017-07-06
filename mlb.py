@@ -3,40 +3,29 @@ import time
 import sys, os
 import mlbgame
 import helper
+import xml.etree.ElementTree as ET
+import mlb_data
 
-year = helper.convert_str(time.strftime("%Y"))
-month = helper.convert_str(time.strftime("%m"))
-day = helper.convert_str(time.strftime("%d"))
-hour = helper.convert_str(time.strftime("%H"))
-
-#rewing the day if it's not past 11 a.m (need to check if month is turning)
-if hour < 11:
-    day -= 1
-
-teams_dictionary = {'cubs': "Cubs", 'yankees': "Yankees", 'redsox': "Red Sox",
-                    'mets': "Mets", 'indians': "Indians", 'giants': "Giants",
-                    'angels': "Angels", 'dodgers': "Dodgers", 'pirates': "Pirates",
-                    'astros': "Astros", 'jays': "Blue Jays", 'cards': "Cardinals",
-                    'as': "Athletics", 'athletics': "Athletics", 'os': "Orioles",
-                    'orioles': "Orioles", 'rangers': 'Rangers', 'twins': "Twins",
-                    'rockies': "Rockies", 'phillies': "Phillies", 'tigers': "Tigers",
-                    'rays': "Rays", 'braves': "Braves", 'dbacks': "Diamondbacks",
-                    'diamondbacks': "Diamondbacks", 'royals': "Royals", 'brewers': "Brewers",
-                    'whitesox': "White Sox", 'reds': "Reds", 'marlins': "Marlins",
-                    'padres': "Padres", 'nats': "Nationals", 'mariners': "Mariners"}
-
-def get_all_game_scores():
-    games = mlbgame.day(year, month, day)
-    games_list = []
-    for game in games:
-        games_list.append(str(game))
-
-    return (" ".join(games_list))
-
-def get_team_score( name ):
-    team = teams_dictionary[name]
-    game = mlbgame.day(year, month, day, home=team, away=team)
+#!score team_name command return
+def get_team_score( team_name ):
+    game = mlb_data.get_todays_game(team_name)
     if game:
         return(str(game[0]))
     else:
-        return("Sorry, looks like there's no " + name + " game today")
+        return("Sorry, looks like there's no " + team_name + " game today")
+
+#!pitching team_name command return
+def get_current_pitcher( team_name ):
+    game_status = mlb_data.get_game_status(team_name)
+    if game_status == "PRE_GAME":
+        return "Game hasn't started yet"
+
+    xml = mlb_data.get_game_data_overview(team_name)
+    tree = ET.parse(xml)
+    root = tree.getroot()
+
+    for data in root:
+        for current_pitcher in data.iter('current_pitcher'):
+            player_id = current_pitcher.attrib['id']
+            current_pitcher = current_pitcher.attrib['first_name'] + " " + current_pitcher.attrib['last_name'] + " is pitching. His record is " + current_pitcher.attrib['wins'] + "-" + current_pitcher.attrib['losses'] + "  with a " + current_pitcher.attrib['era'] + " ERA " + 'http://gdx.mlb.com/images/gameday/mugshots/mlb/'+player_id+'@4x.jpg'
+            return current_pitcher
