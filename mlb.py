@@ -118,3 +118,18 @@ def get_last_ab( team_name ):
     if last_event == None:
         return "Nothing happened in this inning yet"
     return str(last_event[-1])
+
+def get_ondeck_batter( team_name ):
+    game_status = mlb_data.get_game_status(team_name)
+    if game_status == "PRE_GAME":
+        return "Game hasn't start yet"
+
+    xml = mlb_data.get_game_overview_xml(team_name)
+    tree = ET.parse(xml)
+    root = tree.getroot()
+
+    for data in root:
+        for current_ondeck in data.iter('current_ondeck'):
+            player_id = current_ondeck.attrib['id']
+            current_ondeck = 'http://gdx.mlb.com/images/gameday/mugshots/mlb/'+player_id+'@4x.jpg ' + current_ondeck.attrib['first_name'] + " " + current_ondeck.attrib['last_name'] + " is on deck "
+            return current_ondeck

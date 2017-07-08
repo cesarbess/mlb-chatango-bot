@@ -35,6 +35,8 @@ class bot(ch.RoomManager):
                 room.message(mlb.get_game_time(args))
             elif cmd.lower() == "lastab" and args != "":
                 room.message(mlb.get_last_ab(args))
+            elif cmd.lower() == "ondeck" and args != "":
+                room.message(mlb.get_ondeck_batter(args))
 
 rooms = ["testingbotfam"]
 username = bot_account
