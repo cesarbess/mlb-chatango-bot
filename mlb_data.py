@@ -57,3 +57,11 @@ def get_player_stats( team_name ):
     game = get_todays_game(team_name)
     player_stats = mlbgame.stats.player_stats(game.game_id)
     return player_stats
+
+def get_game_events( team_name ):
+    game = get_todays_game(team_name)
+    if game != None:
+        events = mlbgame.game_events(game.game_id)
+        return events
+    else:
+        return("Looks like there's no " + team_name + " game today")

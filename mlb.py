@@ -108,3 +108,13 @@ def get_game_time( team_name ):
     am_pm = overview_dict['ampm']
     message = "Today's " + mlb_data.teams_dictionary[team_name] + " game will start at " + start_time + am_pm + " " + time_zone
     return message
+
+def get_last_ab( team_name ):
+    overview = mlb_data.get_game_overview_dict(team_name)
+    current_inning = overview['inning']
+    inning_state = overview['inning_state'].lower()
+    events = mlb_data.get_game_events(team_name)
+    last_event = events[current_inning][inning_state]
+    if last_event == None:
+        return "Nothing happened in this inning yet"
+    return str(last_event[-1])
