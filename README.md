@@ -17,6 +17,10 @@ Command List:
     !line team_name -  posts the pitching line for the starting pitcher of the game from the team in argument
     !record team_name posts the current W/L record for the team in arguments
     !time team_name - posts the start time of today’s game of the team in arguments
+    !last_ab team_name - posts the description for the last at bat occurred in current inning of teams game in argument
+    !ondeck team_name - posts the current player on deck on team_name game
+    !inhole team_name - posts the current player in the hole on team_name game
+    !dueup team_name - posts the due up batters oon team_name game
 
 Note:
 
