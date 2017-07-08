@@ -51,7 +51,7 @@ def get_current_batter( team_name ):
     for data in root:
         for current_batter in data.iter('current_batter'):
             player_id = current_batter.attrib['id']
-            current_batter = current_batter.attrib['first_name'] + " " + current_batter.attrib['last_name'] + " is batting. His avg is " + current_batter.attrib['avg'] + ' http://gdx.mlb.com/images/gameday/mugshots/mlb/'+player_id+'@4x.jpg'
+            current_batter = "http://gdx.mlb.com/images/gameday/mugshots/mlb/"+player_id+"@4x.jpg " + current_batter.attrib['first_name'] + " " + current_batter.attrib['last_name'] + " is batting."
             return current_batter
 
 def get_team_record( team_name ):
@@ -133,3 +133,21 @@ def get_ondeck_batter( team_name ):
             player_id = current_ondeck.attrib['id']
             current_ondeck = 'http://gdx.mlb.com/images/gameday/mugshots/mlb/'+player_id+'@4x.jpg ' + current_ondeck.attrib['first_name'] + " " + current_ondeck.attrib['last_name'] + " is on deck "
             return current_ondeck
+
+def get_inhole_batter( team_name ):
+    game_status = mlb_data.get_game_status(team_name)
+    if game_status == "PRE_GAME":
+        return "Game hasn't start yet"
+
+    xml = mlb_data.get_game_overview_xml(team_name)
+    tree = ET.parse(xml)
+    root = tree.getroot()
+
+    for data in root:
+        for current_inhole in data.iter('due_up_inhole'):
+            player_id = current_inhole.attrib['id']
+            current_inhole = ' http://gdx.mlb.com/images/gameday/mugshots/mlb/'+player_id+'@4x.jpg '+ current_inhole.attrib['first_name'] + " " + current_inhole.attrib['last_name'] + " is in the hole "
+            return current_inhole
+
+def get_due_up_batters( team_name ):
+    return get_current_batter(team_name) + " " + get_ondeck_batter(team_name) + " " + get_inhole_batter(team_name)

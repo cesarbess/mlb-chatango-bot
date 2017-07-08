@@ -37,6 +37,10 @@ class bot(ch.RoomManager):
                 room.message(mlb.get_last_ab(args))
             elif cmd.lower() == "ondeck" and args != "":
                 room.message(mlb.get_ondeck_batter(args))
+            elif cmd.lower() == "inhole" and args != "":
+                room.message(mlb.get_inhole_batter(args))
+            elif cmd.lower() == "dueup" and args != "":
+                room.message(mlb.get_due_up_batters(args))
 
 rooms = ["testingbotfam"]
 username = bot_account
