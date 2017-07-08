@@ -35,7 +35,7 @@ def get_current_pitcher( team_name ):
     for data in root:
         for current_pitcher in data.iter('current_pitcher'):
             player_id = current_pitcher.attrib['id']
-            current_pitcher = current_pitcher.attrib['first_name'] + " " + current_pitcher.attrib['last_name'] + " is pitching. His record is " + current_pitcher.attrib['wins'] + "-" + current_pitcher.attrib['losses'] + "  with a " + current_pitcher.attrib['era'] + " ERA " + 'http://gdx.mlb.com/images/gameday/mugshots/mlb/'+player_id+'@4x.jpg'
+            current_pitcher = 'http://gdx.mlb.com/images/gameday/mugshots/mlb/'+player_id+'@4x.jpg ' + current_pitcher.attrib['first_name'] + " " + current_pitcher.attrib['last_name'] + " is currently pitching in the "+ team_name + " game. His record is " + current_pitcher.attrib['wins'] + "-" + current_pitcher.attrib['losses'] + "  with a " + current_pitcher.attrib['era'] + " ERA "
             return current_pitcher
 
 def get_current_batter( team_name ):
