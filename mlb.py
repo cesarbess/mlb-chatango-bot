@@ -177,3 +177,41 @@ def get_starting_pitcher( team_name ):
         return mlb_data.teams_dictionary[team_name] + " game started already. The starting pitcher was " + get_pitching_line(team_name)
     else:
         return mlb_data.teams_dictionary[team_name] + " game is over. The starting pitcher line was" + get_pitching_line(team_name)
+
+
+def get_player_stats( team_name, player_name ):
+    game_stats = mlb_data.get_player_stats(team_name)
+
+    if is_team_at_home(team_name):
+        team_player_stats = game_stats['home_batting']
+    else:
+        team_player_stats = game_stats['away_batting']
+
+    for player in team_player_stats:
+        if player['name'].lower() == player_name:
+
+            player_at_bats = player['ab']
+            player_hits = player['h']
+            player_walks = player['bb']
+            player_home_runs = player['hr']
+            player_rbi = player['rbi']
+            player_lob = player['lob']
+
+            message = player['name'] + " is " + player_hits + "-" + player_at_bats + " today "
+            if int(player_walks) == 1:
+                message += "with a walk "
+            elif int(player_walks) > 1:
+                message += "with " + player_walks + " walks "
+            if int(player_home_runs) == 1:
+                message += "He's also hit a home run "
+            elif int(player_home_runs) > 1:
+                message += "He's also hit " + player_home_runs + " homers "
+            if int(player_rbi) == 1:
+                message += "and has one RBI "
+            elif int(player_rbi) > 1:
+                message += "and has "+ player_rbi + " RBI's "
+            if int(player_lob) >= 3:
+                message += "also he stranded " + player_lob + " players on base"
+
+            return message
+    return "Sorry, i don't recognize that name, please use the name on the player uniform, or make sure he's in today's lineup for the " + team_name

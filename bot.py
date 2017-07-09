@@ -43,7 +43,8 @@ class bot(ch.RoomManager):
                 room.message(mlb.get_due_up_batters(args))
             elif cmd.lower() == "starting" and args != "":
                 room.message(mlb.get_starting_pitcher(args))
-
+            elif cmd.lower() == "stats" and args != "" and player != "":
+                room.message(mlb.get_player_stats(args, player))
 
 rooms = ["testingbotfam"]
 username = bot_account
