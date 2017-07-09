@@ -21,6 +21,9 @@ Command List:
     !ondeck team_name - posts the current player on deck on team_name game
     !inhole team_name - posts the current player in the hole on team_name game
     !dueup team_name - posts the due up batters oon team_name game
+    !starting team_name - posts the starting pitcher for the team_name game
+    !stats team_name player_name - posts the game stats for the player_name in the arguments
+    !seasonstats team_name player_name - posts the season stats for player_name in the arguments
 
 Note:
 
