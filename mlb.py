@@ -151,3 +151,29 @@ def get_inhole_batter( team_name ):
 
 def get_due_up_batters( team_name ):
     return get_current_batter(team_name) + " " + get_ondeck_batter(team_name) + " " + get_inhole_batter(team_name)
+
+def get_starting_pitcher( team_name ):
+    game_status = mlb_data.get_game_status(team_name)
+    if game_status == "PRE_GAME" or game_status == "IMMEDIATE_PREGAME":
+        xml = mlb_data.get_game_overview_xml(team_name)
+        tree = ET.parse(xml)
+        root = tree.getroot()
+
+        if is_team_at_home(team_name):
+            for data in root:
+                print(data)
+                for starting_pitcher in data.iter('home_probable_pitcher'):
+                    starting_pitcher_id = starting_pitcher.attrib['id']
+                    starting_pitcher = ' http://gdx.mlb.com/images/gameday/mugshots/mlb/'+starting_pitcher_id+'@4x.jpg '+ starting_pitcher.attrib['first_name'] + " " + starting_pitcher.attrib['last_name'] + " is starting today for the " + team_name
+                    return starting_pitcher
+        else:
+            for data in root:
+
+                for starting_pitcher in data.iter('away_probable_pitcher'):
+                    starting_pitcher_id = starting_pitcher.attrib['id']
+                    starting_pitcher = ' http://gdx.mlb.com/images/gameday/mugshots/mlb/'+starting_pitcher_id+'@4x.jpg '+ starting_pitcher.attrib['first_name'] + " " + starting_pitcher.attrib['last_name'] + " is starting today for the " + team_name
+                    return starting_pitcher
+    elif game_status == "IN_PROGRESS":
+        return mlb_data.teams_dictionary[team_name] + " game started already. The starting pitcher was " + get_pitching_line(team_name)
+    else:
+        return mlb_data.teams_dictionary[team_name] + " game is over. The starting pitcher line was" + get_pitching_line(team_name)
