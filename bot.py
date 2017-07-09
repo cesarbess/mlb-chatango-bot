@@ -10,9 +10,9 @@ class bot(ch.RoomManager):
 
     def onMessage(self, room, user, message):
         try:
-            cmd, args = message.body.split(" ", 1)
+            cmd, args, player = message.body.split(" ", 2)
         except:
-            cmd, args = message.body, ""
+            cmd, args, player = message.body, ""
         if cmd[0] == "!":
             prfx = True
             cmd = cmd[1:]
