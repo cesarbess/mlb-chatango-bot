@@ -215,3 +215,26 @@ def get_player_stats( team_name, player_name ):
 
             return message
     return "Sorry, i don't recognize that name, please use the name on the player uniform, or make sure he's in today's lineup for the " + team_name
+
+def get_player_season_stats( team_name, player_name ):
+    game_stats = mlb_data.get_player_stats(team_name)
+
+    if is_team_at_home(team_name):
+        team_player_stats = game_stats['home_batting']
+    else:
+        team_player_stats = game_stats['away_batting']
+
+    for player in team_player_stats:
+        if player['name'].lower() == player_name:
+
+            player_id = player['id']
+            player_name = player['name_display_first_last']
+            player_avg = player['avg']
+            player_obp = player['obp']
+            player_slg = player['slg']
+            player_ops = player['ops']
+
+            message = ' http://gdx.mlb.com/images/gameday/mugshots/mlb/'+player_id+'@4x.jpg ' + player_name + " " + player_avg + " AVG | " + player_obp + " OBP | " + player_slg + " SLG | " + player_ops + " OPS"
+            return message
+
+    return "Sorry, i don't recognize that name, please use the name on the player uniform, or make sure he plays for the " + team_name
