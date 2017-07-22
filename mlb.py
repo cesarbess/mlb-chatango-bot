@@ -42,7 +42,7 @@ def get_current_batter( team_name ):
     #check other possible statuses
     game_status = mlb_data.get_game_status(team_name)
     if game_status == "PRE_GAME":
-        return "Game hasn't start yet fucktard"
+        return "Game hasn't start yet"
 
     xml = mlb_data.get_game_overview_xml(team_name)
     tree = ET.parse(xml)
