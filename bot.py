@@ -13,8 +13,14 @@ class bot(ch.RoomManager):
         try:
             cmd, args, player = message.body.split(" ", 2)
         except:
-            cmd, args = message.body.split(" ", 1)
-            player = None
+            try:
+                cmd, args = message.body.split(" ", 1)
+                player = None
+            except:
+                    cmd = message.body
+                    args = None
+                    player = None
+
         if cmd[0] == "!":
             prfx = True
             cmd = cmd[1:]
@@ -22,6 +28,7 @@ class bot(ch.RoomManager):
             prfx = False
 
         if prfx:
+            print(cmd, args, player)
             room.message(commands.get_message_from_command(cmd, args, player))
 
 rooms = ["testingbotfam"]

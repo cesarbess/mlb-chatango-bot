@@ -67,6 +67,10 @@ def get_team_record( team_name ):
         return mlb_data.teams_dictionary[team_name] + " are "+ away_win + "-" + away_loss
 
 def get_pitching_line( team_name ):
+    game_status = mlb_data.get_game_status(team_name)
+    if game_status == "PRE_GAME":
+        return "Game hasn't start yet"
+
     game_stats = mlb_data.get_player_stats(team_name)
     if is_team_at_home(team_name):
         pitcher_stats = game_stats['home_pitching'][0]

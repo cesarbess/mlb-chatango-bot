@@ -1,4 +1,5 @@
 import mlb
+import favorite_team
 
 dictionary = {
 
@@ -21,5 +22,7 @@ dictionary = {
 def get_message_from_command(cmd, args, player):
     if cmd != None and args != None and player == None:
         return dictionary[cmd](args)
+    elif cmd != None and args == None and player == None:
+        return dictionary[cmd](favorite_team.short_name)
     else:
         return dictionary[cmd](args, player)
