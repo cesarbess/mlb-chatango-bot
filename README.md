@@ -1,7 +1,9 @@
-# mlb-chatango-bot
-This bot has the goal to be the one and only chatango chat bot that is truly useful and not just a stupid and annoying AI.  If like me, you enjoy watching MLB games online with the company of several fans of the same team as you, or even rivals and chat along with it, this bot can make your group experience better.
+# sports-bot
+This bot has the goal to communicate with all the sports league API's possible to provide real-time and historical data which can be accessed with simple commands
 
-It simply communicates between mlbgame.py library and the ch.py library and delivers realtime information about any team of your choice.
+Currently it only communicates between mlbgame.py library and the ch.py library and delivers realtime information about any team of your choice.
+
+Upcoming functionalities are connecting with NHL/NBA API
 
 Instructions:
 
@@ -26,4 +28,3 @@ Note:
 
     #team_name = should be underscore e.g: !score cubs
     #information is in nearly real time
-    #more commands to come
